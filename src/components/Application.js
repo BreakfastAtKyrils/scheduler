@@ -1,8 +1,9 @@
 import React from "react";
 import DayList from "./DayList";
+import React, { useState } from "react";
 
 import "components/Application.scss";
-
+const [day, setDay] = useState("Monday");
 const days = [
   {
     id: 1,
@@ -37,11 +38,7 @@ export default function Application(props) {
           src="images/lhl.png"
           alt="Lighthouse Labs"
         />
-        <DayList
-          days={days}
-          day={"Monday"}
-          setDay={day => console.log(day)}
-        />
+        <DayList days={days} day={day} setDay={setDay} />
       </section>
       <section className="schedule">
       </section>
