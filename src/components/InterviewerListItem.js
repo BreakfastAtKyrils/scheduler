@@ -16,7 +16,7 @@ export default function InterviewerListItem(props) {
       src={props.avatar}
       alt={props.name}
     />
-    Sylvia Plath
+    {props.name}
     </li>
   );
 }
