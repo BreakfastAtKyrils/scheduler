@@ -1,10 +1,10 @@
 import DayList from "./DayList";
 import React, { useState, useEffect } from "react";
-import Appointment from "./Appointment";
+import Appointment from "./Appointment/index";
 import axios from "axios";
 
 import "components/Application.scss";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import {useVisualMode} from "hooks/useVisualMode";
 
 // const appointments = {
@@ -57,9 +57,31 @@ export default function Application(props) {
     appointments: {}
   });
 
+  
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    //here we add the singular appointment to the appointments inside state
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    
+    //console.log(id, interview);
+    return axios.put(`/api/appointments/${id}`, appointment).then(() => {
+      console.log('test')
+      setState({...state, appointments})
+    })
+  }
+
+
+
   //console.log(state.interviewers)
 
   const dailyAppointments = getAppointmentsForDay(state, state.day)
+  const dailyInterviewers = getInterviewersForDay(state, state.day)
 
 
   const setDay = day => setState(prev => ({ ...prev, day }));
@@ -89,7 +111,10 @@ export default function Application(props) {
         key={appointment.id} 
         id={appointment.id} 
         time={appointment.time} 
-        interview={interview} 
+        interview={interview}
+        bookInterview={bookInterview}
+        interviewers={dailyInterviewers}
+        // onSave={save} 
       />
     );
   })
