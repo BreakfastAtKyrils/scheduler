@@ -4,6 +4,7 @@ import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form"
+import Confirm from './Confirm';
 import Status from './Status';
 import useVisualMode from 'hooks/useVisualMode';
 
@@ -11,12 +12,21 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const CONFIRM = "CONFIRM";
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
+  function deleteInterview() {
+    transition(SAVING)
+    props.cancelInterview(props.id)
+    .then(() => {
+      transition(EMPTY)
+    })
+  }
+  
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -31,17 +41,19 @@ export default function Appointment(props) {
     })
     //.catch() will handle the error
   }
-  
+
   return (
     <article className='Appointment' id={props.id} time={props.time}>
       <Header time={props.time}></Header>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+      {mode === CONFIRM && <Confirm message='deleting this appointment?' onConfirm={deleteInterview} />}
       {mode === SAVING && <Status/>}
       {mode === SHOW && (
         <Show
-          student={props.interview.student}
-          interviewer={props.interview.interviewer}
+          student={props.interview && props.interview.student}
+          interviewer={props.interview && props.interview.interviewer}
           onCancel={() => transition(EMPTY)}
+          onDelete={() => transition(CONFIRM)}
         />
       )}
       {mode === CREATE && (
