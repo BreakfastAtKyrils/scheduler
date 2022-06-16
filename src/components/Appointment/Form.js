@@ -10,6 +10,7 @@ export default function Form(props) {
   function reset() {
     setStudent("");
     setInterviewer(null)
+    setError("")
   }
   function cancel() {
     reset()
@@ -24,6 +25,7 @@ export default function Form(props) {
       setError("Please select an interviewer");
       return;
     }
+    setError("")
     props.onSave(student, interviewer);
   }
 return (
@@ -40,7 +42,7 @@ return (
         data-testid="student-name-input"
       />
     </form>
-    
+
     <section className="appointment__validation">{error}</section>
 
     <InterviewerList 
