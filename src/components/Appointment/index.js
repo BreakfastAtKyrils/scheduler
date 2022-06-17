@@ -59,12 +59,12 @@ export default function Appointment(props) {
   }
 
   return (
-    <article className='Appointment' id={props.id} time={props.time}>
+    <article className='Appointment' id={props.id} time={props.time} data-testid="appointment">
       <Header time={props.time}></Header>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === CONFIRM && <Confirm message='deleting this appointment?' onConfirm={deleteInterview} />}
-      {mode === SAVING && <Status/>}
-      {mode === DELETING && <Status/>}
+      {mode === SAVING && <Status message="Saving"/>}
+      {mode === DELETING && <Status message="Deleting"/>}
       {mode === EDIT && (
         <Form
           student={props.interview && props.interview.student}

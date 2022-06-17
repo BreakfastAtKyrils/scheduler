@@ -4,9 +4,15 @@ import axios from "axios";
 import {
   render,
   cleanup,
+  getByTestId,
   waitForElement,
   fireEvent,
   getByText,
+  queryByText,
+  getAllByTestId,
+  getByAltText,
+  getByPlaceholderText,
+  queryByAltText,
 } from "@testing-library/react";
 
 import Application from "components/Application";
@@ -22,4 +28,46 @@ describe("Application", () => {
       expect(getByText("Leopold Silvers")).toBeInTheDocument();
     });
   });
+
+  it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
+const { container } = render(<Application />);
+
+// Wait until the text "Archie Cohen" is displayed.
+await waitForElement(() =>{
+  const v = getByText(container, "Archie Cohen")
+  // console.log(v)
+  return v;
+} );
+
+// Click the "Add" button on the first empty appointment.
+const appointment = getAllByTestId(container, "appointment").find(appointment => queryByAltText(appointment, "Add"))
+fireEvent.click(getByAltText(appointment, "Add"));
+
+// Enter the name "Lydia Miller-Jones" into the input with the placeholder "Enter Student Name".
+fireEvent.change(getByPlaceholderText(appointment,"Enter Student Name"), {
+  target: { value: "Lydia Miller-Jones" }
+});
+
+// Click the first interviewer in the list.
+fireEvent.click(getByAltText(appointment, "Sylvia Palmer"))
+
+// Click the "Save" button on that same appointment.
+fireEvent.click(getByText(appointment, "Save"))
+
+// Check that the element with the text "Saving" is displayed.
+expect(getByText(appointment,"Saving")).toBeInTheDocument();
+
+// Wait until the element with the text "Lydia Miller-Jones" is displayed.
+await waitForElement(() =>{
+  const v = getByText(container, "Lydia Miller-Jones")
+  // console.log(v)
+  return v;
+} );
+
+// Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
+const DayListItem = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"))
+// const day = getByText(DayListItem, "Monday")
+expect(getByText(DayListItem,"no spots remaining")).toBeInTheDocument();
+  });
+
 });
