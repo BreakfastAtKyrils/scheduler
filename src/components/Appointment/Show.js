@@ -6,8 +6,8 @@ export default function Show(props) {
       <section className="appointment__card-left">
         <h2 className="text--regular">{props.student}</h2>
         <section className="interviewer">
-          <h4 className="text--light">Interviewer</h4>
-          <h3 className="text--regular">{props.interveiw && props.interviewer.name}</h3>
+          <h4 className="text--light">{props.interviewer.name}</h4>
+          <h3 className="text--regular">{props.interview && props.interviewer.name}</h3>
         </section>
       </section>
       <section className="appointment__card-right">
