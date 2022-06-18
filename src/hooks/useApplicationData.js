@@ -69,7 +69,6 @@ export default function useApplicationData() {
       } 
     }
 
-
     let days = state.days
     days[dayBooked] = day;
 

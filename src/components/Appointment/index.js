@@ -82,7 +82,6 @@ export default function Appointment(props) {
       )}
       {mode === CREATE && (
         <Form
-          // student={student}
           interviewer={props.interviewer}
           interviewers={props.interviewers}
           bookInterview={props.bookInterview}
