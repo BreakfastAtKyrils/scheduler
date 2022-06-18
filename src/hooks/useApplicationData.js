@@ -51,11 +51,24 @@ export default function useApplicationData() {
     };
 
     const dayBooked = getDay(state.day)
-    
+
     let day = {
       ...state.days[dayBooked],
-      spots: state.days[dayBooked].spots - 1
+      spots: state.days[dayBooked]
     }
+
+    if (!state.appointments[id].interview) {
+      day = {
+        ...state.days[dayBooked],
+        spots: state.days[dayBooked].spots - 1
+      } 
+    } else {
+      day = {
+        ...state.days[dayBooked],
+        spots: state.days[dayBooked].spots
+      } 
+    }
+
 
     let days = state.days
     days[dayBooked] = day;
