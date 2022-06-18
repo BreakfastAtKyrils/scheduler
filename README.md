@@ -24,6 +24,8 @@ npm run storybook
 ```
 
 ## Screenshots
+Here is what a day with booked interviewers looks like:
 !["Here is what a day with booked interviewers looks like:"](https://github.com/BreakfastAtKyrils/scheduler/blob/master/docs/view%20appointments.png?raw=true)
 
+Here is what the user sees when booking an interview:
 !["Here is what the user sees when booking an interview:"](https://github.com/BreakfastAtKyrils/scheduler/blob/master/docs/book%20Appointment.png?raw=true)
