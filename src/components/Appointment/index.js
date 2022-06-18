@@ -32,7 +32,6 @@ export default function Appointment(props) {
       transition(EMPTY)
     })
     .catch((error) => {
-      //console.log('receive this error: ', error)
       transition(ERROR_DELETE, true)
     })
   }
@@ -49,7 +48,6 @@ export default function Appointment(props) {
       transition(SHOW)
     })
     .catch((error) => {
-      //console.log('receive this error: ', error)
       transition(ERROR_SAVE, true)
     })
   }
@@ -90,8 +88,6 @@ export default function Appointment(props) {
           bookInterview={props.bookInterview}
           onCancel={() => back()}
           onSave={save}
-          // onSave={() => save(props.student, props.interviewer)}
-          // // onSave={() => console.log(student)}
         />
       )}
     </article>
